@@ -1,16 +1,16 @@
-#include "stockfishio.h"
+#include "sfio.h"
 #include <string.h>
 #include <sstream>
 #include <iostream>
 #include <stdio.h>
 #include <fstream>
 
-// SFIO::SFIO()
-// {
+ SFIO::SFIO()
+ {
 
-// }
+ }
 
-std::string SFIO::exec(char* cmd) // runs a command on the command line
+std::string SFIO::exec(char* cmd) const// runs a command on the command line
 {
     FILE* pipe = popen(cmd, "r");
     
@@ -18,6 +18,8 @@ std::string SFIO::exec(char* cmd) // runs a command on the command line
 
     char buffer[128];
     std::string result = "";
+
+    // read pipe into result, in buffered chunks
     while(!feof(pipe))
     {
         if(fgets(buffer, 128, pipe) != NULL)
@@ -30,23 +32,23 @@ std::string SFIO::exec(char* cmd) // runs a command on the command line
     return result;
 }
 
-std::string SFIO::getBestMove(std::string text) //takes stockfish output and searches for the move after bestmove
+std::string SFIO::getBestMove(const std::string &text) const //takes stockfish output and searches for the move after bestmove
 {
     std::string target = "bestmove";
-    std::stringstream Stream(text);
+    std::stringstream stream(text);
     
     std::string word = "";
     do
     {
-        Stream >> word;
-    } while(strcmp(target.c_str(), word.c_str()) != 0);
+        stream >> word;
+    } while(target != word);
 
-    Stream >> word;
+    stream >> word;
    
     return word;
 }
 
-std::string SFIO::makeMove(std::string moveList, std::string moveTime)
+std::string SFIO::makeMove(const std::string &moveList, const std::string &moveTime) const
 {
     std::ofstream sfcmds;
     sfcmds.open("sfcmds.txt");
