@@ -1,4 +1,5 @@
 #include "board.h"
+
 #include <iostream>
 #include <string.h>
 
@@ -30,11 +31,11 @@ void Board::moveOnBoard(const std::string &move)
     char toRowChar = move.at(3);    
 
     int fromColNum = (int)fromColChar - 'a';
-    int fromRowNum = 7 - ((int)fromRowChar - '1');
+    int fromRowNum = 7 - ((int)fromRowChar - '1'); // subtraction flips matrix so first row is on bottom
     int toColNum = (int)toColChar - 'a';
     int toRowNum = 7 - ((int)toRowChar - '1');
 
-    char onFrom = board[fromRowNum][fromColNum];
+    char onFrom = board[fromRowNum][fromColNum]; // get the char representing the piece that will move
 
 
     putChar('-', fromColNum, fromRowNum);

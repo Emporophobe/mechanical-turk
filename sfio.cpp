@@ -1,20 +1,21 @@
 #include "sfio.h"
-#include <string.h>
-#include <sstream>
-#include <iostream>
-#include <stdio.h>
+
 #include <fstream>
+#include <iostream>
+#include <sstream>
+#include <stdio.h>
+#include <string.h>
 
  SFIO::SFIO()
  {
 
  }
 
-std::string SFIO::exec(char* cmd) const// runs a command on the command line
+std::string SFIO::exec(char* cmd) const // runs a command on the command line
 {
     FILE* pipe = popen(cmd, "r");
     
-    if(!pipe) return "ERROR";
+    if(!pipe) return "ERROR"; // check for bad input
 
     char buffer[128];
     std::string result = "";
@@ -52,12 +53,12 @@ std::string SFIO::makeMove(const std::string &moveList, const std::string &moveT
 {
     std::ofstream sfcmds;
     sfcmds.open("sfcmds.txt");
-    sfcmds << "position startpos moves " << moveList << "\n";
-    sfcmds << "go movetime " << moveTime << "\n\n";
+    sfcmds << "position startpos moves " << moveList << "\n"; // stockfish's prescribed input format
+    sfcmds << "go movetime " << moveTime << "\n\n"; // stockfish analysis command
 
     sfcmds.close();
 
-    std::string response = exec("stockfish < sfcmds.txt");
+    std::string response = exec("stockfish < sfcmds.txt"); // pipe commands to stockfish for analysis
 
     return getBestMove(response);
 }

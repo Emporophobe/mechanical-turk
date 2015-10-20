@@ -1,8 +1,8 @@
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
-#include <string>
 #include <iostream>
+#include <string>
 #include <vector>
 
 class Board
@@ -12,7 +12,7 @@ public:
 
     void moveOnBoard(const std::string &move); // changes board given move string
 
-    friend std::ostream& operator<<(std::ostream &os, const Board &rhs);
+    friend std::ostream& operator<<(std::ostream &os, const Board &rhs); // output overload to print board
 
 private:
     std::vector<std::vector<char>> board; // matrix to hold piece positions

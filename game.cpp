@@ -1,8 +1,9 @@
 #include "game.h"
 #include "board.h"
-#include <string>
+
 #include <iostream>
 #include <regex>
+#include <string>
 
 Game::Game()
 {
@@ -23,8 +24,10 @@ void Game::makeMove(const std::string &move)
 
 void Game::readUserInput()
 {
-    Board B;
+    Board B; // initial board
+    std::cout << B << std::endl; // display start position
     std::string in; // user input
+    
     while (true)
     {
         std::cout << ">>> ";
@@ -32,8 +35,14 @@ void Game::readUserInput()
 
         if (std::regex_match(in, std::regex("[a-h][1-8][a-h][1-8]"))) // if input matches move format
         {
+            // make player move on board
             B.moveOnBoard(in);
+            std::cout << B << std::endl;
+ 
+            // process move and get response
             makeMove(in);
+ 
+            // make computer move on board and print to console
             B.moveOnBoard(response);
             std::cout << response << std::endl;
             std::cout << B << std::endl;
@@ -41,20 +50,20 @@ void Game::readUserInput()
 
         else if (in == "board")
         {
-            std::cout << B << std::endl;
+            std::cout << B << std::endl; // print board to console
         }
 
         else if (in == "moves")
         {
-            std::cout << moveList << std::endl;
+            std::cout << moveList << std::endl; // output all moves in game
         }
 
         else if (in == "quit")
         {
-            break;
+            break; // exit
         }
 
-        else
+        else // catch all other inputs
         {
             std::cout << "Bad input, try again." << std::endl;
         } 

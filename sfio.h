@@ -1,10 +1,10 @@
 #ifndef _SFIO_H_
 #define _SFIO_H_
 
-#include <string>
+#include <fstream>
 #include <iostream>
 #include <stdio.h>
-#include <fstream>
+#include <string>
 
 class SFIO
 {
